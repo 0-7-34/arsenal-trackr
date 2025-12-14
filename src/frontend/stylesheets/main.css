@@ -1,0 +1,61 @@
+/* Global Styles */
+html, body {
+    font-family: 'Roboto', sans-serif;
+    height: 100%;
+    margin: 0;
+    padding: 0;
+    width: 100%;
+} @media (prefers-color-scheme: dark) {
+  html, body {
+    background-color: #121212;
+    color: #E0E0E0;
+  }
+}
+
+header {
+    align-items: center;
+    background-color: #121212;
+    display: flex;
+    height: 5vh;
+    justify-content: space-between;
+    margin-top: 0;
+    padding-top: 10px;
+    position: fixed;
+    top: 0;
+    width: 100%;
+} header * {
+    margin: 10px;
+} header input {
+    border-radius: 40px;
+    height: 35px;
+    width: 100%;
+}
+
+/* Dropdown Menu */
+.dropdown-container {
+    color: #e0e0e0d5;
+    cursor: pointer;
+    display: inline-block;
+    position: relative; /* required for absolute positioning of dropdown */
+} .dropdown-container:hover .dropdown-menu {
+    display: block;
+} .dropdown-menu {
+    border: 1px solid #444444;
+    border-radius: 10px;
+    display: none;
+    list-style: none;
+    padding: 0;
+    position: absolute;
+    left: 0;
+    top: 80%;
+} .dropdown-menu li a {
+  display: block;
+  padding: 10px;
+  text-decoration: none;
+  color: #121212;
+}
+
+.welcome-section {
+    margin-top: 80px;
+    text-align: center;
+}

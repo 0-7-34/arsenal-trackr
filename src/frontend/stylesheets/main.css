@@ -5,6 +5,10 @@ html, body {
     margin: 0;
     padding: 0;
     width: 100%;
+    img {
+        max-width: 100%;
+        max-height: 100%;
+    }
 } @media (prefers-color-scheme: dark) {
   html, body {
     background-color: #121212;
@@ -16,19 +20,24 @@ header {
     align-items: center;
     background-color: #121212;
     display: flex;
-    height: 5vh;
+    height: 50px;
     justify-content: space-between;
     margin-top: 0;
     padding-top: 10px;
     position: fixed;
     top: 0;
     width: 100%;
+    z-index: 100;
 } header * {
     margin: 10px;
 } header input {
     border-radius: 40px;
     height: 35px;
-    width: 100%;
+    width: 70%;
+    max-width: 800px;
+} header img {
+    height: 35px;
+    width: auto;
 }
 
 /* Dropdown Menu */
@@ -36,7 +45,7 @@ header {
     color: #e0e0e0d5;
     cursor: pointer;
     display: inline-block;
-    position: relative; /* required for absolute positioning of dropdown */
+    position: relative;
 } .dropdown-container:hover .dropdown-menu {
     display: block;
 } .dropdown-menu {
@@ -55,7 +64,34 @@ header {
   color: #121212;
 }
 
+/* Main Content*/
+
+/* Welcome Section */
 .welcome-section {
     margin-top: 80px;
+    text-align: center;
+}
+/* Squad */
+.squad-section {
+    background-color: 121212;
+    border:#444444 1px solid;
+    margin: 20px;
+    text-align: center;
+} .squad-list {
+    height: 100vh;
+    max-width: 600px;
+    position: relative;
+    width: 100%;
+} .player {
+    display: block;
+    position: absolute;
+    width: 8%;
+    text-align: center;
+    transform: translate(-100%, -100%);
+}
+
+/* Analytics Section */
+.analytics-section {
+    margin: 20px;
     text-align: center;
 }

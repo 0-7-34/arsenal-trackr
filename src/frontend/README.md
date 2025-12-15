@@ -12,4 +12,3 @@ Primary Text: (#121212)
 Secondary Text/Borders: Medium Gray (#666666, #999999)
 Accent: Soft Gray (#CCCCCC) for minimal highlights, Soft Teal (#1ABC9C) for intense highlights.
 ```
->>>>>>> 99485a4e478b7502dad15a3dd43db2e7c442f3f8

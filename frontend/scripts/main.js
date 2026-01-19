@@ -36,8 +36,13 @@ fetch("/api/arsenal")
     const el = document.getElementById("teamInfo");
     el.innerHTML = `
       <h3>${team.name}</h3>
-      <p><strong>Stadium:</strong> ${team.venue ?? "N/A"}</p>
-      <p><strong>Founded:</strong> ${team.founded ?? "N/A"}</p>
+      <p><strong>Year:</strong> ${team.season ?? "N/A"}</p>
+      <p><strong>League:</strong> ${team.league ?? "N/A"}</p>
+      <p><strong>Country:</strong> ${team.country ?? "N/A"}</p>
+      <p><strong>Wins:</strong> ${team.wins ?? "N/A"}</p>
+      <p><strong>Losses:</strong> ${team.losses ?? "N/A"}</p>
+      <p><strong>Draws:</strong> ${team.draws ?? "N/A"}</p>
+      <p><strong>Formation:</strong> ${team.formation ?? "N/A"}</p>
     `;
   })
   .catch(err => console.error("Team fetch failed:", err));
@@ -55,8 +60,22 @@ fetch("/api/arsenal/players")
         <tr>
           <th>#</th>
           <th>Name</th>
-          <th>Position</th>
+          <th>Age</th>
           <th>Nationality</th>
+          <th>Height</th>
+          <th>Weight</th>
+          <th>Team</th>
+          <th>Appearances</th>
+          <th>Minutes</th>
+          <th>Position</th>
+          <th>Rating</th>
+          <th>Shirt Number</th>
+          <th>Goals</th>
+          <th>Passes</th>
+          <th>Tackles</th>
+          <th>Dribbles</th>
+          <th>Fouls</th>
+          <th>Cards</th>
         </tr>
       </thead>
       <tbody></tbody>
@@ -67,10 +86,24 @@ fetch("/api/arsenal/players")
     players.forEach(p => {
       const tr = document.createElement("tr");
       tr.innerHTML = `
-        <td>${p.shirt_number ?? ""}</td>
+        <td>${p.id}</td>
         <td>${p.name}</td>
+        <td>${p.age}</td>
+        <td>${p.nationality}</td>
+        <td>${p.height}</td>
+        <td>${p.weight}</td>
+        <td>${p.team}</td>
+        <td>${p.appearances}</td>
+        <td>${p.minutes}</td>
         <td>${p.position ?? ""}</td>
-        <td>${p.nationality ?? ""}</td>
+        <td>${p.rating ?? ""}</td>
+        <td>${p.shirtnumber ?? ""}</td>
+        <td>${p.goals ?? ""}</td>
+        <td>${p.passes ?? ""}</td>
+        <td>${p.tackles ?? ""}</td>
+        <td>${p.dribbles ?? ""}</td>
+        <td>${p.fouls ?? ""}</td>
+        <td>${p.cards ?? ""}</td>
       `;
       tbody.appendChild(tr);
     });
@@ -101,11 +134,22 @@ async function loadPlayers() {
       li.innerHTML = `
         <div class="player-name">${p.name}</div>
         <div class="player-meta">
-          <span class="pill">${p.dateOfBirth}</span>
-          <span class="pill">${p.position}</span>
-          <span class="pill">${p.shirtNumber}</span>
+          <span class="pill">${p.age}</span>
           <span class="pill">${p.nationality}</span>
-          <span class="pill">#${p.currentTeam}</span>
+          <span class="pill">${p.height}</span>
+          <span class="pill">${p.weight}</span>
+          <span class="pill">${p.team}</span>
+          <span class="pill">${p.appearances}</span>
+          <span class="pill">${p.minutes}</span>
+          <span class="pill">${p.position ?? ""}</span>
+          <span class="pill">${p.rating ?? ""}</span>
+          <span class="pill">${p.shirtnumber ?? ""}</span>
+          <span class="pill">${p.goals ?? ""}</span>
+          <span class="pill">${p.passes ?? ""}</span>
+          <span class="pill">${p.tackles ?? ""}</span>
+          <span class="pill">${p.dribbles ?? ""}</span>
+          <span class="pill">${p.fouls ?? ""}</span>
+          <span class="pill">${p.cards ?? ""}</span>
         </div>
       `;
       list.appendChild(li);

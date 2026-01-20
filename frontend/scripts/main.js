@@ -13,7 +13,7 @@ const formations = {
 };
 
 // MAIN
-let formation = null;
+let formation = "4-3-3";
 // Different teams
 fetch("/api/arsenal")
   .then(res => res.json())
@@ -23,17 +23,17 @@ fetch("/api/arsenal")
       <p><strong>Formation:</strong> ${team.formation}</p>
     `;
     // Set formation to the specific team's formation
-    formation = team?.formation ?? "4-3-3";
     buildPitchSlots(formation);
     changeLogo(team.logo);
-  });
 
-fetch("/api/arsenal/players")
+    return fetch("/api/arsenal/players");
+  })
   .then(res => res.json())
   .then(players => {
     assignPlayersToFormation(formation, players);
   })
-  .catch(err => console.error("Players fetch failed:", err));
+  .catch(err => console.error("Players fetch failed:", err  
+));
 
 // Functions
 
@@ -79,6 +79,9 @@ function assignPlayersToFormation(formation, players) {
       <img src="${p.photo}">
       <span class="name">${p.name ?? ""}</span>
     `;
+    div.addEventListener("click", () => {
+      playerCard(p)
+    });
   }
   benchPlayers(remaining);
 }
@@ -90,6 +93,9 @@ function benchPlayers(players) {
   for (const p of players) {
     const div = document.createElement("div");
     div.className = "player";
+    div.addEventListener("click", () => {
+      playerCard(p)
+    });
 
     div.innerHTML = `
       <img src="${p.photo}">
@@ -139,4 +145,42 @@ function buildPitchSlots(formation) {
 function changeLogo(logo) {
   document.getElementById("head-icon").href = logo;
   document.getElementById("icon").src = logo;
+}
+
+function playerCard(player) {
+  const existing = document.querySelector(".overlay");
+  if (existing) existing.remove();
+
+  const overlay = document.createElement("div");
+  overlay.className = "overlay";
+
+  const popup = document.createElement("div");
+  popup.className = "popup";
+
+  popup.innerHTML = `
+    <img src="${player.photo}">
+    <h2>${player.name}</h2>
+    <p>${player.position ?? "Unknown position"}</p>
+    <p>Age: ${player.age}</p>
+    <p>Nationality: ${player.nationality}</p>
+  `;
+
+  overlay.appendChild(popup);
+  document.body.appendChild(overlay);
+
+  overlay.addEventListener("click", (e) => {
+    if (e.currentTarget === overlay) {
+      overlay.remove();
+    }
+  });
+
+  function onKeyDown(e) {
+    if (e.key === "Escape") cleanup();
+  }
+  document.addEventListener("keydown", onKeyDown);
+
+  function cleanup() {
+    overlay.remove();
+    document.removeEventListener("keydown", onKeyDown);
+  }
 }

@@ -50,6 +50,7 @@ header {
     display: block;
 } .dropdown-menu {
     border: 1px solid #444444;
+    background-color: #121212;
     border-radius: 10px;
     display: none;
     list-style: none;
@@ -57,6 +58,7 @@ header {
     position: absolute;
     left: 0;
     top: 80%;
+    z-index: 11;
 } .dropdown-menu li a {
   display: block;
   padding: 10px;
@@ -84,14 +86,23 @@ header {
     position: relative;
     width: 100%;
 } .starter {
+    border-radius: 10%;
+    cursor: pointer;
     display: block;
+    padding: 1%;
     position: absolute;
-    width: 8%;
+    width: 10%;
     text-align: center;
     transform: translate(-100%, -100%);
+} .starter:hover {
+    background-color: #444444;
 }
 
 /* Bench Section */
+#bench-title {
+    margin-left: 6px;
+    text-align: left;
+}
 #players-list-container {
     font-size: 40%;
     padding: 0;
@@ -103,9 +114,29 @@ header {
 } .player {
     align-items: center;
     column-gap: 0.5%;
+    cursor: pointer;
     display: grid;
     grid-template-columns: 3%/*photo*/ 8%/*name*/ 5%/*age*/ 5%/*nationality*/ 3%/*height*/ 3%/*weight*/ 4%/*team*/ 5%/*appearances*/ 5%/*minutes*/ 6%/*position*/ 7%/*rating*/ 5%/*shirt*/ 5%/*goals*/ 5%/*passes*/ 5%/*tackles*/ 5%/*dribbles*/ 8%/*fouls*/ 5%/*cards*/;
     margin: 6px;
 } .player img {
     width: 100%;
+} .player:hover {
+    background-color: #444444;
+    padding-right: 1%;
+    width: 101%;
+}
+
+/* Player Cards */
+.overlay{
+    background: rgba(68, 68, 68, 0.6);
+    display: grid;
+    inset: 0;
+    place-items: center;
+    position: fixed;
+    z-index: 10;
+} .popup{
+    background-color: #121212;
+    padding: 16px;
+    border-radius: 12px;
+    width: min(90vw, 500px);
 }

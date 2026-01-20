@@ -29,6 +29,9 @@ const pool = new Pool({
   port: Number(process.env.PGPORT),
 });
 
+// PREM TEAMS IN 2024
+
+
 // ENDPOINTS
 app.get("/api/update-arsenal", async (req, res) => {
   // getting team data from API
@@ -148,6 +151,14 @@ app.get("/api/arsenal", async (req, res) => {
 app.get("/api/arsenal/players", async (req, res) => {
   const players = await pool.query(
     `SELECT * FROM players ORDER BY appearances DESC NULLS LAST, name`
+  );
+  res.json(players.rows);
+});
+
+// TO DO: add formations to database
+app.get("/api/formations", async (req, res) => {
+  const players = await pool.query(
+    `SELECT * FROM formations`
   );
   res.json(players.rows);
 });

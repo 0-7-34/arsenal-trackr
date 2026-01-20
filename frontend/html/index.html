@@ -4,7 +4,7 @@
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <title>Arsenal Trackr</title>
-        <link rel="icon" type="image/png" href="/assets/placeholder.png">
+        <link rel="icon" id="head-icon" type="image/png" href="/assets/placeholder.png">
         <link rel="stylesheet" href="/stylesheets/main.css">
     </head>
     <body>
@@ -18,7 +18,7 @@
                     </ul>
             </div>
             <input type="text" name="query" placeholder="Search for a team">
-            <div class="logo"><img src="/assets/placeholder.png"></div>
+            <div><img id="icon" src="/assets/placeholder.png"></div>
         </header>
         <main>
             <section class="welcome-section">
@@ -35,14 +35,9 @@
                 <h2>Bench</h2>
                 <!-- Actual squad list from DB -->
                 <h3>Players (from database)</h3>
-                <div id="playersList">
-                    <input id="playerSearch" type="text" placeholder="Search by name..." />
-                    <ul id="playersList"></ul>
+                <div id="players-list-container">
+                    <ul id="players-list"></ul>
                 </div>
-                </section>
-                <section class="analytics-section">
-                <h2>This Season</h2>
-                <div id="standings"></div>
             </section>
         </main>
         <script src="/scripts/main.js" defer></script>

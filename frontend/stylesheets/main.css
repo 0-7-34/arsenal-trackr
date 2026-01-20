@@ -64,13 +64,14 @@ header {
   color: #121212;
 }
 
-/* Main Content*/
+/* Main Content */
 
 /* Welcome Section */
 .welcome-section {
     margin-top: 80px;
     text-align: center;
 }
+
 /* Squad */
 .squad-section {
     background-color: 121212;
@@ -82,7 +83,7 @@ header {
     max-width: 600px;
     position: relative;
     width: 100%;
-} .player {
+} .starter {
     display: block;
     position: absolute;
     width: 8%;
@@ -90,8 +91,21 @@ header {
     transform: translate(-100%, -100%);
 }
 
-/* Analytics Section */
-.analytics-section {
-    margin: 20px;
-    text-align: center;
+/* Bench Section */
+#players-list-container {
+    font-size: 40%;
+    padding: 0;
+    margin: 0;
+} #players-list {
+    display: block;
+    padding: 0px;
+    margin: 0;
+} .player {
+    align-items: center;
+    column-gap: 0.5%;
+    display: grid;
+    grid-template-columns: 3%/*photo*/ 8%/*name*/ 5%/*age*/ 5%/*nationality*/ 3%/*height*/ 3%/*weight*/ 4%/*team*/ 5%/*appearances*/ 5%/*minutes*/ 6%/*position*/ 7%/*rating*/ 5%/*shirt*/ 5%/*goals*/ 5%/*passes*/ 5%/*tackles*/ 5%/*dribbles*/ 8%/*fouls*/ 5%/*cards*/;
+    margin: 6px;
+} .player img {
+    width: 100%;
 }

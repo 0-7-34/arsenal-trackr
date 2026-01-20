@@ -25,6 +25,7 @@ fetch("/api/arsenal")
     // Set formation to the specific team's formation
     formation = team?.formation ?? "4-3-3";
     buildPitchSlots(formation);
+    changeLogo(team.logo);
   });
 
 fetch("/api/arsenal/players")
@@ -37,7 +38,7 @@ fetch("/api/arsenal/players")
 // Functions
 
 function applyFormation(name) {
-  document.querySelectorAll(".player").forEach(p => {
+  document.querySelectorAll(".starter").forEach(p => {
     const pos = p.dataset.position;
     const coords = formations[name]?.[pos];
 
@@ -83,35 +84,34 @@ function assignPlayersToFormation(formation, players) {
 }
 
 function benchPlayers(players) {
-  const list = document.getElementById("playersList");
+  const list = document.getElementById("players-list");
   list.innerHTML = "";
 
   for (const p of players) {
-    const li = document.createElement("li");
-    li.className = "player-card";
+    const div = document.createElement("div");
+    div.className = "player";
 
-    li.innerHTML = `
-      <div class="player-name">${p.name}</div>
-      <div class="player-meta">
-        <span class="pill">${p.age}</span>
-        <span class="pill">${p.nationality}</span>
-        <span class="pill">${p.height}</span>
-        <span class="pill">${p.weight}</span>
-        <span class="pill">${p.team}</span>
-        <span class="pill">${p.appearances}</span>
-        <span class="pill">${p.minutes}</span>
-        <span class="pill">${p.position ?? ""}</span>
-        <span class="pill">${p.rating ?? ""}</span>
-        <span class="pill">${p.shirtnumber ?? ""}</span>
-        <span class="pill">${p.goals ?? ""}</span>
-        <span class="pill">${p.passes ?? ""}</span>
-        <span class="pill">${p.tackles ?? ""}</span>
-        <span class="pill">${p.dribbles ?? ""}</span>
-        <span class="pill">${p.fouls ?? ""}</span>
-        <span class="pill">${p.cards ?? ""}</span>
-      </div>
+    div.innerHTML = `
+      <img src="${p.photo}">
+      <span>${p.name ?? "data unavailable"}</span>
+      <span>Age: ${p.age}</span>
+      <span>Nationality: ${p.nationality}</span>
+      <span>Height: ${p.height}cm</span>
+      <span>Weight: ${p.weight}kg</span>
+      <span>Team: ${p.team}</span>
+      <span>Appearances: ${p.appearances}</span>
+      <span>Played: ${p.minutes} minutes</span>
+      <span>Plays as: ${p.position ?? "data unavailable"}</span>
+      <span>Season rating: ${p.rating ?? "data unavailable"}</span>
+      <span>Shirt No. ${p.shirtnumber ?? "data unavailable"}</span>
+      <span>Goals: ${p.goals ?? 0}</span>
+      <span>Passes: ${p.passes ?? 0}</span>
+      <span>Tackles: ${p.tackles ?? 0}</span>
+      <span>Dribbles: ${p.dribbles ?? 0}</span>
+      <span>Fouls committed: ${p.fouls ?? 0}</span>
+      <span>Cards recieved: ${p.cards ?? 0}</span>
     `;
-    list.appendChild(li);
+    list.appendChild(div);
   }
 }
 
@@ -123,7 +123,7 @@ function buildPitchSlots(formation) {
 
   for (const pos of Object.keys(formations[formation])) {
     const div = document.createElement("div");
-    div.className = "player";
+    div.className = "starter";
     div.dataset.position = pos;
 
     div.innerHTML = `
@@ -134,4 +134,9 @@ function buildPitchSlots(formation) {
     pitch.appendChild(div);
   }
   applyFormation(formation);
+}
+
+function changeLogo(logo) {
+  document.getElementById("head-icon").href = logo;
+  document.getElementById("icon").src = logo;
 }

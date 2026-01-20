@@ -147,7 +147,7 @@ app.get("/api/arsenal", async (req, res) => {
 
 app.get("/api/arsenal/players", async (req, res) => {
   const players = await pool.query(
-    `SELECT * FROM players ORDER BY shirtnumber NULLS LAST, name`
+    `SELECT * FROM players ORDER BY appearances DESC NULLS LAST, name`
   );
   res.json(players.rows);
 });

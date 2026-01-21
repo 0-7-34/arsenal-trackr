@@ -9,33 +9,40 @@ const formations = {
     LB: [20, 75], LCB: [40, 78], RCB: [60, 78], RB: [80, 75],
     LCM: [25, 55], CM: [50, 55], RCM: [75, 55],
     LW: [20, 30], ST: [50, 25], RW: [80, 30]
+  }, "4-2-3-1": {
+    GK: [50, 92],
+    LB: [20, 75], LCB: [40, 78], RCB: [60, 78], RB: [80, 75],
+    LCM: [25, 55], CM: [50, 55], RCM: [75, 55],
+    LW: [20, 30], ST: [50, 25], RW: [80, 30]
+  }, "3-4-2-1": {
+    GK: [50, 92],
+    LB: [20, 75], LCB: [40, 78], RCB: [60, 78], RB: [80, 75],
+    LCM: [25, 55], CM: [50, 55], RCM: [75, 55],
+    LW: [20, 30], ST: [50, 25], RW: [80, 30]
   }
 };
 
-// MAIN
+// VARIABLES
 let formation = "4-3-3";
-// Different teams
-fetch("/api/arsenal")
-  .then(res => res.json())
-  .then(team => {
-    document.getElementById("team-info").innerHTML = `
-      <h4>${team.season} ${team.name}</h4>
-      <p><strong>Formation:</strong> ${team.formation}</p>
-    `;
-    // Set formation to the specific team's formation
-    buildPitchSlots(formation);
-    changeLogo(team.logo);
+const team_ids = {42: "Arsenal", 66: "Aston Villa", 35: "Bournemouth", 55: "Brentford", 51: "Brighton & Hove Albion", 49: "Chelsea", 52: "Crystal Palace", 45: "Everton", 36: "Fulham", 57: "Ipswich Town", 46: "Leicester City", 40: "Liverpool", 50: "Manchester City", 33: "Manchester United", 34: "Newcastle United", 65: "Nottingham Forest", 41: "Southampton", 47: "Tottenham Hotspur", 48: "West Ham United", 39: "Wolves"
+};
 
-    return fetch("/api/arsenal/players");
-  })
-  .then(res => res.json())
-  .then(players => {
-    assignPlayersToFormation(formation, players);
-  })
-  .catch(err => console.error("Players fetch failed:", err  
-));
+// MAIN
 
-// Functions
+// Creating buttons for different teams
+for (const [key, value] of Object.entries(team_ids)) {
+  const ul = document.querySelector(".dropdown-menu");
+  const li = document.createElement("li");
+  li.id = key;
+  li.textContent = value;
+  li.onclick = () => loadTeam(key)
+  ul.appendChild(li);
+}
+
+// Default to arsenal
+loadTeam(42);
+
+// FUNCTIONS
 
 function applyFormation(name) {
   document.querySelectorAll(".starter").forEach(p => {
@@ -79,9 +86,7 @@ function assignPlayersToFormation(formation, players) {
       <img src="${p.photo}">
       <span class="name">${p.name ?? ""}</span>
     `;
-    div.addEventListener("click", () => {
-      playerCard(p)
-    });
+    div.onclick = () => playerCard(p);
   }
   benchPlayers(remaining);
 }
@@ -93,9 +98,7 @@ function benchPlayers(players) {
   for (const p of players) {
     const div = document.createElement("div");
     div.className = "player";
-    div.addEventListener("click", () => {
-      playerCard(p)
-    });
+    div.onclick = () => playerCard(p);
 
     div.innerHTML = `
       <img src="${p.photo}">
@@ -145,6 +148,29 @@ function buildPitchSlots(formation) {
 function changeLogo(logo) {
   document.getElementById("head-icon").href = logo;
   document.getElementById("icon").src = logo;
+}
+
+function loadTeam(teamId) {
+  fetch(`/api/teams/${teamId}`)
+  .then(res => res.json())
+  .then(team => {
+    document.getElementById("team-info").innerHTML = `
+      <h4>${team.season} ${team.name}</h4>
+      <p><strong>Formation:</strong> ${team.formation}</p>
+    `;
+    // Set formation to the specific team's formation
+    formation = team.formation;
+    buildPitchSlots(formation);
+    changeLogo(team.logo);
+
+    return fetch(`/api/teams/${teamId}/players`);
+  })
+  .then(res => res.json())
+  .then(players => {
+    assignPlayersToFormation(formation, players);
+  })
+  .catch(err => console.error("Players fetch failed:", err  
+));
 }
 
 function playerCard(player) {

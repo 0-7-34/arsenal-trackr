@@ -13,6 +13,7 @@ CREATE TABLE teams (
 
 CREATE TABLE players (
   id INTEGER PRIMARY KEY,
+  teamid INTEGER,
   name TEXT NOT NULL,
   age INTEGER,
   nationality TEXT,

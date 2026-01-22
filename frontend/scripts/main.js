@@ -12,13 +12,18 @@ const formations = {
   }, "4-2-3-1": {
     GK: [50, 92],
     LB: [20, 75], LCB: [40, 78], RCB: [60, 78], RB: [80, 75],
-    LCM: [25, 55], CM: [50, 55], RCM: [75, 55],
-    LW: [20, 30], ST: [50, 25], RW: [80, 30]
+    LCDM: [40, 63], RCDM: [60, 63], LCAM: [25, 45], CAM: [50, 45], RCAM: [75, 45],
+    ST: [50, 25]
   }, "3-4-2-1": {
     GK: [50, 92],
-    LB: [20, 75], LCB: [40, 78], RCB: [60, 78], RB: [80, 75],
-    LCM: [25, 55], CM: [50, 55], RCM: [75, 55],
-    LW: [20, 30], ST: [50, 25], RW: [80, 30]
+    LCB: [30, 78], CB: [50, 78], RCB: [70, 78],
+    LM: [17,55], LCM: [40, 55], RCM: [60, 55], RM: [83, 55],
+    LF: [35, 30], ST: [50, 25], RF: [65, 30],
+  }, "5-4-1": {
+    GK: [50, 92],
+    LWB: [10, 68], LCB: [35, 75], CB: [50, 78], RCB: [65, 75], RWB: [90, 68],
+    LM: [20, 50], LCM: [40, 50], RCM: [60, 50], RM: [80, 50],
+    ST: [50, 25]
   }
 };
 
@@ -62,9 +67,9 @@ function assignPlayersToFormation(formation, players) {
 
   const allowedSlotsForRole = {
     Goalkeeper: ["GK"],
-    Defender: ["LB", "LCB", "RCB", "RB", "LWB", "RWB"],
-    Midfielder: ["LM", "LCM", "CM", "RCM", "RM", "CDM", "CAM"],
-    Attacker: ["LS", "RS", "ST", "LW", "RW"]
+    Defender: ["LB", "LWB", "LCB", "CB", "RCB", "RWB", "RB"],
+    Midfielder: ["LM", "LCM", "LCDM", "LCAM", "CDM", "CM", "CAM", "RCAM", "RCM", "RCDM", "RM"],
+    Attacker: ["LS", "RS", "ST", "LW", "RW", "LF", "RF"]
   };
 
   const remaining = [...players];

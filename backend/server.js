@@ -1,10 +1,13 @@
-// imports
+// IMPORTS
 import express from "express"; // like flask but for js (makes it easier to work with endpoints)
 import fetch from "node-fetch";
 import pkg from "pg"; // postgresql
 import dotenv from "dotenv"; // houses the important data like auth keys
 import path from "path";
 import { fileURLToPath } from "url";
+
+// day variable (used for API call limit)
+const ONE_DAY_MS = 24 * 60 * 60 * 1000;
 
 // getting paths and names
 const __filename = fileURLToPath(import.meta.url);
@@ -68,6 +71,8 @@ app.get("/api/formations", async (req, res) => {
 
 app.listen(3000, () => console.log("Server running: http://localhost:3000"));
 
+// FUNCTIONS
+
 async function fetchPlayers({team_id, season, apiKey }) {
   let page = 1;
   let total_pages = 1;
@@ -116,6 +121,15 @@ async function fetchTeam({team_id, league_id, season, apiKey }) {
   return payload;
 }
 async function updatePlayers(team_id) {
+  // Check last update
+  const existing = await pool.query(
+    `SELECT api_updated_at FROM teams WHERE id = $1`,
+    [team_id]
+  );
+
+  const last = existing.rows[0]?.team_api_updated_at;
+  if (isFresh(last)) console.log("Team update skipped (fresh)");
+
   const players = await fetchPlayers({team_id, season: 2024, apiKey: process.env.FOOTBALL_DATA_TOKEN});
 
   // putting it into the database
@@ -175,6 +189,15 @@ async function updatePlayers(team_id) {
 }
 
 async function updateTeam(team_id) {
+  // Check last update
+  const existing = await pool.query(
+    `SELECT api_updated_at FROM teams WHERE id = $1`,
+    [team_id]
+  );
+
+  const last = existing.rows[0]?.team_api_updated_at;
+  if (isFresh(last)) console.log("Team update skipped (fresh)");
+
   const item = await fetchTeam({team_id, league_id: 39, season: 2024, apiKey: process.env.FOOTBALL_DATA_TOKEN});
   // putting it into the database
   await pool.query(
@@ -205,4 +228,9 @@ async function updateTeam(team_id) {
   );
 
   return ({ status: "Team Updated" });
+}
+
+function isFresh(ts) {
+  if (!ts) return false;
+  return (Date.now() - new Date(ts).getTime()) < ONE_DAY_MS;
 }
